@@ -6,8 +6,8 @@ const router = express.Router();
 
 // @route   POST /users
 // @desc    Register a new user
-router.post('/', async (req, res) => {
-    const { name, email, password, role, location, contact } = req.body;
+router.post('/register', async (req, res) => {
+    const { name, email, password, role } = req.body;
 
     try {
         let user = await User.findOne({ email });
@@ -21,8 +21,6 @@ router.post('/', async (req, res) => {
             email,
             password,
             role,
-            location,
-            contact
         });
 
         const salt = await bcrypt.genSalt(10);
@@ -61,7 +59,7 @@ router.post('/login', async (req, res) => {
             }
         };
 
-        jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' },
+        jwt.sign(payload, "aaaa", { expiresIn: '5h' },
             (err, token) => {
                 if (err) throw err;
                 res.json({ token });
@@ -125,16 +123,58 @@ router.delete('/:id', ensureAdmin(), async (req, res) => {
     }
 });
 
+// @route   GET /users
+// @desc    Get all users
+router.get('/', ensureAdmin(), async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (error) {
+        console.error(error.message);
+    }
+});
+
+// @route   GET /users/:id
+// @desc    Get a user
+router.get('/:id', ensureAdmin(), async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.json(user);
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+});
+
+
+
 
 function ensureAdmin() {
-    return function(req, res, next) {
-        if (req.user && req.user.role === 'admin') {
-            next();
-        } else {
-            res.status(403).json({ msg: 'Access denied. Admin only.' });
-        }
-    };
+  return (req, res, next) => {
+    const authHeader = req.header('Authorization');
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+      return res.status(401).send('Access denied. No token provided.');
+    }
+
+    try {
+      const JWT_SECRET = "aaaa";
+      const decoded = jwt.verify(token, JWT_SECRET);
+      req.user = decoded.user;
+      if (req.user.role !== 'admin') {
+        return res.status(403).send('Access denied. Not an admin.');
+      }
+      next();
+    } catch (err) {
+      return res.status(400).send('Invalid token.');
+    }
+  };
 }
+
+
+
+
 
 module.exports = router;
 
