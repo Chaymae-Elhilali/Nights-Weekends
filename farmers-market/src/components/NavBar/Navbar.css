@@ -56,6 +56,7 @@ p {
     /* Dark Green */
     color: white;
     outline: none;
+    text-decoration: none;
     /* Remove default focus outline */
 }
 
