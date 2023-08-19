@@ -1,0 +1,125 @@
+/* ... Navbar styles ... */
+
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+
+    background: url('/src/assets/farmer.jpg') center/cover no-repeat, #4CAF50;
+    /* Green background for the field */
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(to right, #558B2F, #33691E);
+    /* Creating furrows with gradient */
+    z-index: -1;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    z-index: 2;
+}
+
+.hero button{
+    z-index: 2; 
+}
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 10%;
+    background-color: white;
+}
+
+.feature {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.feature h3 {
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+.feature p {
+    font-size: 1rem;
+    margin: 20px 0;
+}
+
+/* Symbol for 'Direct from Farms' */
+.feature:nth-child(1)::before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: #4CAF50;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    margin: 20px auto;
+}
+
+/* Symbol for 'Eco Friendly' */
+.feature:nth-child(2)::before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 60px;
+    border: 5px solid #4CAF50;
+    border-radius: 50%;
+    margin: 20px auto;
+}
+
+/* Symbol for 'Support Local' */
+.feature:nth-child(3)::before {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 60px;
+    /* Vertical line height */
+    background: #4CAF50;
+    margin: 20px auto;
+    position: relative;
+}
+
+.feature:nth-child(3)::before::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    /* Horizontal line width */
+    height: 2px;
+    background: #4CAF50;
+}

@@ -14,24 +14,13 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 
-// JWT Middleware: Decodes the JWT token and attaches user to the request object
-app.use((req, res, next) => {
-    const token = req.header('x-auth-token');
-    if (!token) return next();
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded.user;
-        next();
-    } catch (err) {
-        console.error("Failed to authenticate token", err);
-        res.status(401).send('Invalid token');
-    }
-});
 
 // Routes
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 app.use('/users', userRoutes);
+app.use('/products', productRoutes);
 
 // Other routes can be added similarly...
 
