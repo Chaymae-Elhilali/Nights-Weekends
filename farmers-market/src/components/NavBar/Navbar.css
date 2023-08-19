@@ -1,0 +1,72 @@
+body,
+h1,
+h2,
+h3,
+p {
+    font-family: 'Roboto Slab', serif;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    height: 70px;
+    background: linear-gradient(90deg, #66BB6A, #43A047);
+    /* Green gradient */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Slight shadow for depth */
+    transition: all 0.3s ease;
+    /* Smooth transition for hover effects */
+}
+
+.navbar-logo {
+    
+    font-size: 24px;
+    font-weight: bold;
+    color: #004d40;
+    /* Dark Green */
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    /* Smooth scaling on hover */
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+    /* Slightly enlarge logo on hover */
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 15px;
+    /* Spacing between buttons */
+}
+.navbar-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+   
+            font-family: 'Roboto Slab', serif;
+        
+    /* Smooth transition for hover effects */
+    background-color: #004d40;
+    /* Dark Green */
+    color: white;
+    outline: none;
+    /* Remove default focus outline */
+}
+
+.navbar-button:hover {
+    background-color: #003d33;
+    /* Slightly darker green on hover */
+    transform: translateY(-2px);
+    /* Slight lift on hover */
+}
+
+.navbar-button:active {
+    transform: translateY(1px);
+    /* Slight press on active click */
+}
