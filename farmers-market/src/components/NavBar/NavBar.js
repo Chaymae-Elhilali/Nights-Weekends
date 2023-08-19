@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
@@ -8,8 +9,8 @@ function Navbar() {
                 Farm2Consumer
             </div>
             <div className="navbar-buttons">
-                <button className="navbar-button">Login</button>
-                <button className="navbar-button">Register</button>
+                <Link className="navbar-button" to="/login">Login</Link>
+                <Link className="navbar-button" to="/register">Register</Link>
             </div>
         </div>
     );
