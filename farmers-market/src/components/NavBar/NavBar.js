@@ -6,7 +6,7 @@ function Navbar() {
     return (
         <div className="navbar">
             <div className="navbar-logo">
-                Farm2Consumer
+                <Link to="/">Farm2Consumer</Link>
             </div>
             <div className="navbar-buttons">
                 <Link className="navbar-button" to="/login">Login</Link>

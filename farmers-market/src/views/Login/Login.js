@@ -11,14 +11,14 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/login', { email, password });
+            const response = await axios.post('http://localhost:5000/users/login', { email, password });
             
-            if (response.data.success) {
+            if (response.status === 200 || response.status === 201) {
                 // Store token and update app state
                 localStorage.setItem('token', response.data.token);
                 // Redirect or update state to indicate user is logged in
                 // For now, just clear any error messages:
-                setError("");
+                setError("WOW");
             } else {
                 // If login is unsuccessful due to wrong credentials
                 setError("Invalid email or password.");
