@@ -28,7 +28,13 @@ p {
     letter-spacing: 1px;
     cursor: pointer;
     transition: transform 0.2s ease;
+    text-decoration: none;
     /* Smooth scaling on hover */
+}
+
+.navbar-logo a{
+    text-decoration:none;
+    color: #004d40;
 }
 
 .navbar-logo:hover {

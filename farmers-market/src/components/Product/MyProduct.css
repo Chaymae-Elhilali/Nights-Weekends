@@ -1,0 +1,184 @@
+.products-container {
+    padding: 20px;
+    width: 80%;
+    margin: auto;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #4CAF50;
+}
+
+.products-table thead th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-left: 1px solid white;
+    font-weight: bold;
+}
+
+.products-table thead th:first-child {
+    border-left: none;
+}
+
+.products-table tbody td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #4CAF50;
+    color: #333;
+    font-size: 1em;
+}
+
+.edit-btn,
+.delete-btn {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.edit-btn {
+    background-color: #f0db4f;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #d5bc42;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.modal {
+    display: none;
+    /* Default to none, will be toggled by React state */
+    position: fixed;
+    /* Fixed position */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+    z-index: 1000;
+    /* High z-index to ensure it's on top */
+}
+
+.modal-content {
+    position: relative;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    /* A max-width can help on large screens */
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+.modal-title {
+    color: #4CAF50;
+}
+
+
+
+.modal-body label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+    border-color: #43a047;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #43a047;
+}
+
+.add-product-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: background-color 0.2s;
+}
+
+.add-product-btn:hover {
+    background-color: #43a047;
+}
+
+.upload-placeholder{
+    max-width: 150px;
+        max-height: 150px;
+        display: block;
+        margin: 10px auto;
+        border-radius: 5px;
+}

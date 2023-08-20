@@ -2,11 +2,18 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/product');
 const { ensureRole } = require('../middleware/roleMiddleware.js');  // Assuming you defined this earlier.
+const { uploadSingle } = require('../middleware/uploadPicture.js');  // Assuming you defined this earlier.
 
 // @route   POST /products
 // @desc    Add a new product
-router.post('/', ensureRole(['farmer', 'admin']), async (req, res) => {
-    const { name, description, price, quantity, imageUrl, category } = req.body;
+router.post('/', ensureRole(['farmer', 'admin']) , uploadSingle, async (req, res) => {
+    const { name, description, price, quantity, category } = req.body;
+    let imageUrl;
+    if(!req.file) {
+         imageUrl = 'No image uploaded';
+    } else {
+         imageUrl = req.file.originalname;
+    }
 
     try {
         let product = new Product({
@@ -18,6 +25,7 @@ router.post('/', ensureRole(['farmer', 'admin']), async (req, res) => {
             imageUrl,
             category
         });
+        
 
         await product.save();
         res.json(product);
@@ -41,7 +49,7 @@ router.get('/', async (req, res) => {
 
 // @route   PUT /products/:id
 // @desc    Update a product
-router.put('/:id', ensureRole(['farmer', 'admin']), async (req, res) => {
+router.put('/:id', ensureRole(['farmer', 'admin']) , async (req, res) => {
     const { name, description, price, quantity, imageUrl, category } = req.body;
 
     const productFields = {};
