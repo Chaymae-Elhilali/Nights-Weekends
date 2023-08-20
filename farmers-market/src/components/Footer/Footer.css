@@ -6,6 +6,7 @@
     padding: 40px 0;
     display: flex;
     justify-content: space-around;
+    flex-shrink: 0;
 }
 
 .footer-section {
