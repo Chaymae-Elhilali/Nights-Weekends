@@ -10,7 +10,7 @@ router.post('/', ensureRole(['farmer', 'admin']) , uploadSingle, async (req, res
     const { name, description, price, quantity, category } = req.body;
     let imageUrl;
     if(!req.file) {
-         imageUrl = 'https://via.placeholder.com/150';
+         imageUrl = 'No image uploaded';
     } else {
          imageUrl = req.file.originalname;
     }
@@ -49,7 +49,7 @@ router.get('/', async (req, res) => {
 
 // @route   PUT /products/:id
 // @desc    Update a product
-router.put('/:id', ensureRole(['farmer', 'admin']), async (req, res) => {
+router.put('/:id', ensureRole(['farmer', 'admin']) , async (req, res) => {
     const { name, description, price, quantity, imageUrl, category } = req.body;
 
     const productFields = {};

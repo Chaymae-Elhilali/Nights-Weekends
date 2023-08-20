@@ -7,6 +7,19 @@ const MyProducts = () => {
     const [products, setProducts] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null); 
+    const [selectedEditImage, setSelectedEditImage] = useState(null);
+   const [editProductData, setEditProductData] = useState({
+    productName: "",
+    productDescription: "",
+    imageUrl: null,
+    productPrice: "",
+    productQuantity: "",
+    productCategory: ""
+});
+
+
     const [productData, setProductData] = useState({
         productName: "",
         productDescription: "",
@@ -92,6 +105,86 @@ const MyProducts = () => {
 
         setShowAddModal(false);
     };
+    const handleEditProduct = (productId) => {
+    const productToEdit = products.find(product => product._id === productId);
+    setEditingProduct(productToEdit);
+    setEditProductData({
+        productName: productToEdit.name,
+        productDescription: productToEdit.description,
+        imageUrl: productToEdit.imageUrl,
+        productPrice: productToEdit.price,
+        productQuantity: productToEdit.quantity,
+        productCategory: productToEdit.category
+    });
+    setShowEditModal(true);
+};
+
+
+    const handleUpdateProduct = async () => {
+        const formData = new FormData();
+        formData.append('name', editProductData.productName);
+        formData.append('description', editProductData.productDescription);
+        formData.append('imageUrl', editProductData.imageUrl);
+        formData.append('price', editProductData.productPrice);
+        formData.append('quantity', editProductData.productQuantity);
+        formData.append('category', editProductData.productCategory);
+
+        const token = localStorage.getItem('token');
+    
+    try {
+        await axios.put(`http://localhost:5000/products/${editingProduct._id}`,formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
+            }
+        });
+        // Update local products list
+        const updatedProducts = products.map(product =>
+            product._id === editingProduct._id ? {...editingProduct, ...editProductData} : product
+        );
+        setProducts(updatedProducts);
+        // Close the modal
+        setShowEditModal(false);
+    } catch (error) {
+        console.error("Error updating product:", error);
+    }
+};
+
+
+    const handleDeleteProduct = async (productId) => {
+          const token = localStorage.getItem('token');
+        try {
+            await axios.delete(`http://localhost:5000/products/${productId}`,{
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
+            }
+            });
+            // Filter out the deleted product
+            setProducts(prevProducts => prevProducts.filter(product => product._id !== productId));
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+    };
+
+    const handleImageChangeForEdit = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+        setSelectedEditImage(reader.result); // This assumes you have a similar state to `selectedImage` for the edit product image
+    }
+
+    if (file) {
+        reader.readAsDataURL(file);
+        setEditProductData(prevData => ({
+            ...prevData,
+            imageUrl: file
+        }));
+    }
+};
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -122,8 +215,8 @@ const MyProducts = () => {
                             <td>{product.category}</td>
                             <td>{product.quantity}</td>
                             <td>
-                                <button className="edit-btn">Edit</button>
-                                <button className="delete-btn">Delete</button>
+                                <button className="edit-btn" onClick={() => handleEditProduct(product._id)}>Edit</button>
+    <button className="delete-btn" onClick={() => handleDeleteProduct(product._id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
@@ -184,7 +277,111 @@ const MyProducts = () => {
             <button className="submit-btn" onClick={handleAddProduct}>Submit</button>
         </div>
     </div>
+    {/* update model */}
+    
+
 </div>
+<div className="modal" style={{ display: showEditModal ? 'block' : 'none' }} onClick={() => setShowEditModal(false)}>
+    <div className="modal-content" onClick={e => e.stopPropagation()}> 
+        <div className="modal-header">
+            <h2 className="modal-title">Edit Product</h2>
+            <button className="close-btn" onClick={() => setShowEditModal(false)}>&times;</button>
+        </div>
+        <div className="modal-body">
+            <label htmlFor="editProductName">Product Name:</label>
+            <input 
+                type="text" 
+                id="editProductName" 
+                name="productName" 
+                placeholder="Enter product name" 
+                value={editProductData.productName} 
+                onChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditProductData(prevData => ({ ...prevData, [name]: value }));
+                }} 
+                required 
+            />
+
+            <label htmlFor="editProductDescription">Description:</label>
+            <textarea 
+                id="editProductDescription" 
+                name="productDescription" 
+                placeholder="Enter product description" 
+                rows="3" 
+                value={editProductData.productDescription} 
+                onChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditProductData(prevData => ({ ...prevData, [name]: value }));
+                }} 
+                required
+            ></textarea>
+
+            <div className="image-upload-container">
+                <label htmlFor="editImageUrl">
+                <img src={selectedEditImage || "/upload.jpg"} alt="Upload placeholder" className="upload-placeholder" />
+                Change Image
+                </label>
+                <input 
+                    type="file" 
+                    id="editImageUrl" 
+                    name="imageUrl" 
+                    className="image-upload-input" 
+                    onChange={handleImageChangeForEdit} 
+                />
+            </div>
+
+            <label htmlFor="editProductPrice">Product Price:</label>
+            <input 
+                type="number" 
+                id="editProductPrice" 
+                name="productPrice" 
+                placeholder="Enter product price" 
+                value={editProductData.productPrice} 
+                onChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditProductData(prevData => ({ ...prevData, [name]: value }));
+                }} 
+                required 
+            />
+
+            <label htmlFor="editProductQuantity">Quantity:</label>
+            <input 
+                type="number" 
+                id="editProductQuantity" 
+                name="productQuantity" 
+                placeholder="Enter product quantity" 
+                value={editProductData.productQuantity} 
+                onChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditProductData(prevData => ({ ...prevData, [name]: value }));
+                }} 
+                required 
+            />
+
+            <label htmlFor="editProductCategory">Product Category:</label>
+            <select 
+                id="editProductCategory" 
+                name="productCategory" 
+                className="styled-select" 
+                value={editProductData.productCategory} 
+                onChange={(e) => {
+                    const { name, value } = e.target;
+                    setEditProductData(prevData => ({ ...prevData, [name]: value }));
+                }} 
+                required
+            >
+                <option value="vegetables">Vegetables </option>
+                <option value="fruits">Fruits</option>
+                <option value="dairy">Dairy</option>
+                <option value="meat">Meat</option>
+            </select>
+        </div>
+        <div className="modal-footer">
+            <button className="submit-btn" onClick={handleUpdateProduct}>Update</button>
+        </div>
+    </div>
+</div>
+
 
         </div>
     );
