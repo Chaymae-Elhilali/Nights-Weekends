@@ -19,6 +19,8 @@ const MyProducts = () => {
     productCategory: ""
 });
 
+    const baseUrl = 'https://api-0l05.onrender.com';
+
 
     const [productData, setProductData] = useState({
         productName: "",
@@ -31,7 +33,7 @@ const MyProducts = () => {
     
     useEffect(() => {
         // Fetch products
-        axios.get('http://localhost:5000/products/')
+        axios.get(baseUrl+'/products/')
             .then(response => {
                 setProducts(response.data);
             })
@@ -73,7 +75,7 @@ const MyProducts = () => {
         const token = localStorage.getItem('token');
 
         try {
-            axios.post('http://localhost:5000/products/', formData, {
+            axios.post(baseUrl+'/products/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`
@@ -132,7 +134,7 @@ const MyProducts = () => {
         const token = localStorage.getItem('token');
     
     try {
-        await axios.put(`http://localhost:5000/products/${editingProduct._id}`,formData, {
+        await axios.put(`${baseUrl}/products/${editingProduct._id}`,formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${token}`
@@ -154,7 +156,7 @@ const MyProducts = () => {
     const handleDeleteProduct = async (productId) => {
           const token = localStorage.getItem('token');
         try {
-            await axios.delete(`http://localhost:5000/products/${productId}`,{
+            await axios.delete(`${baseUrl}/products/${productId}`,{
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${token}`

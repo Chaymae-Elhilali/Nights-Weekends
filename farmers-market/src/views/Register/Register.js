@@ -8,12 +8,13 @@ function Register() {
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
     const [error, setError] = useState("");
+    const baseUrl = 'https://api-0l05.onrender.com';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/register', { name ,email, password, role });
+            const response = await axios.post(baseUrl+'/users/register', { name ,email, password, role });
 
             if (response.data.success) {
                 setError("");

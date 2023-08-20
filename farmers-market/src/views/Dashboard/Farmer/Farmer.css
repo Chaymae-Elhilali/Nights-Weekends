@@ -2,8 +2,7 @@
     font-family: 'Poppins', sans-serif;
     margin-top: 20px;
     min-height: 55vh;
-    background-color: #F9F9F9;  
-    /* or whatever space you need between navbar and dashboard-nav */
+    background-color: #F9F9F9;
 }
 
 .dashboard-nav {
@@ -18,26 +17,44 @@
     list-style: none;
     padding-left: 0;
     justify-content: space-between;
-    /* spread the items evenly */
     max-width: 800px;
-    /* or adjust based on your design */
     margin: 0 auto;
-    /* center the nav items */
 }
 
-.dashboard-nav li {
+.dashboard-nav li,
+.dashboard-nav button {
     cursor: pointer;
     margin: 0 15px;
     transition: all 0.3s;
     font-weight: 500;
     font-size: 1.1em;
     border-bottom: 2px solid transparent;
+    background-color: transparent;
+    border: none;
+    padding: 0;
 }
 
-.dashboard-nav li:hover {
+.dashboard-nav li:hover,
+.dashboard-nav button:hover {
     color: #228B22;
     /* Dark green on hover */
     border-bottom: 2px solid #228B22;
+}
+
+.dashboard-nav button {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #228B22;
+    /* Button's green background */
+    color: white;
+    /* Button's text color */
+    transition: background-color 0.3s;
+}
+
+.dashboard-nav button:hover {
+    background-color: #1c6b18;
+    /* Slightly darker green for hover */
 }
 
 .dashboard-content {

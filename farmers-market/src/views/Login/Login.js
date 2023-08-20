@@ -11,12 +11,13 @@ function Login() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");  // To show error messages
     const navigate = useNavigate();
+    const baseUrl = 'https://api-0l05.onrender.com';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:5000/users/login', { email, password });
+            const response = await axios.post(baseUrl+'/users/login', { email, password });
             
             if (response.status === 200 || response.status === 201) {
                 // Store token and update app state
